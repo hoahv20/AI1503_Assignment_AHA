@@ -1,21 +1,35 @@
-import java.util.Scanner;
+import java.io.ObjectStreamConstants;
+import static java.lang.System.in;
+import java.util.*;
+
 
 public class Student {
-    String Name;
-    String Id;
-    String Email;
-    String PhoneNumber;
-    String Rank;
+
+    private String Name;
+    private String ID; 
+     private String Email; 
+     private String Mobiphone; 
+    private int Rank; 
+
+    public Student() {
+    }
+    
+    public Student(String Name,int Rank) {
+        this.Name = Name;
+        this.Rank = Rank;
+    }
     
     
-    Student() {
-        
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Student(String Name, String Id, String Email, String Rank) {
+    public Student(String Name, String ID, String Email, String Mobiphone, int Rank) {
         this.Name = Name;
-        this.Id = Id;
+        this.ID = ID;
         this.Email = Email;
+        this.Mobiphone = Mobiphone;
         this.Rank = Rank;
     }
 
@@ -23,55 +37,63 @@ public class Student {
         return Name;
     }
 
-    public String getId() {
-        return Id;
+    public void setName(String Name) {
+        this.Name = "sdfsdf";
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getEmail() {
         return Email;
     }
 
-    public String getPhoneNumber() {
-        return PhoneNumber;
-    }
-
-    public String getRank() {
-        return Rank;
-    }
-
-    public void setName(String Name) {
-        this.Name = Name;
-    }
-
-    public void setId(String Id) {
-        this.Id = Id;
-    }
-
     public void setEmail(String Email) {
         this.Email = Email;
     }
 
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+    public String getMobiphone() {
+        return Mobiphone;
     }
 
-    public void setRank(String Rank) {
+    public void setMobiphone(String Mobiphone) {
+        this.Mobiphone = Mobiphone;
+    }
+
+    public int getRank() {
+        return Rank;
+    }
+
+    public void setRank(int Rank) {
         this.Rank = Rank;
     }
     
-    
+    public static int checkInputInt() {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            try {
+                int result = Integer.parseInt(sc.nextLine().trim());
+                return result;
+            } catch (NumberFormatException e) {
+                System.err.println("Please input number");
+                System.out.print("Enter again: ");
+            }
+        }
+    }
     
     public void input() {
-           Scanner sc = new Scanner(System.in);
-           Name = sc.nextLine();
-           Id = sc.nextLine();
-           Email = sc.nextLine();
-           PhoneNumber = sc.nextLine();
-           Rank = sc.nextLine();
+        Scanner sc = new Scanner(System.in);
+        Name = sc.nextLine();
+        Rank = checkInputInt();
     }
+    
     
     public void display() {
-        System.out.println(Name + " " + Id + " " + Email + " " + PhoneNumber + " " + Rank);
+        System.out.println(Name + " " + Rank);
     }
-    
 }
