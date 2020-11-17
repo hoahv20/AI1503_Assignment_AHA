@@ -1,16 +1,17 @@
-package assignment_aha;
+package javaapplication50;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-class Contestant implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+class Contestant {
     private String name;
     private String id;
     private String email;
     private String mobilephone;
     private int rank;
     private String password;
+    List<Contestant> a = new ArrayList<>();
 
     public Contestant() {
         name = "NoName";
@@ -85,8 +86,7 @@ class Contestant implements Serializable {
 
     @Override
     public String toString() {
-        return  "Name: "+name + "\t"+"ID: " + id + "\t" +"EMAIL: "+ email + "\t"+"MOBILEPHONE: " + mobilephone + "\t Rank:" + rank+"\t PASSSWORD: "+password;
+        return "Name: " + name + "\t" + "ID: " + id + "\t" + "EMAIL: " + email + "\t" + "MOBILEPHONE: " + mobilephone + "\t Rank:" + rank + "\t PASSSWORD: " + password;
     }
 
-    
 }

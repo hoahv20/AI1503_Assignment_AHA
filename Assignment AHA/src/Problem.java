@@ -1,10 +1,9 @@
-package assignment_aha;
+package javaapplication50;
 
 import java.io.Serializable;
 
-public class Problem implements Serializable {
+public class Problem {
 
-    private static final long serialVersionUID = 1L;
     private String idPro;
     private String date;
     private String namePro;
@@ -43,7 +42,6 @@ public class Problem implements Serializable {
         this.author = author;
     }
 
-    
     public String getIdPro() {
         return idPro;
     }
@@ -112,4 +110,5 @@ public class Problem implements Serializable {
     public String toString() {
         return idPro + "\t" + date + "\t" + namePro + "\t" + description + "\t" + fullDescription + "\t" + mark + "\t" + author;
     }
+
 }

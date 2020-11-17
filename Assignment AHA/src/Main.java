@@ -1,14 +1,18 @@
-package assignment_aha;
+package javaapplication50;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class Main {
@@ -107,6 +111,25 @@ public class Main {
 
     }
 
+    public static boolean checkInputYN() {
+        //loop until user input correct
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Do you want to choose Y or N? ");
+            String result = sc.nextLine();
+            //return true if user input y/Y
+            if (result.equalsIgnoreCase("Y")) {
+                return true;
+            }
+            //return false if user input n/N
+            if (result.equalsIgnoreCase("N")) {
+                return false;
+            }
+            System.err.println("Please input y/Y or n/N? ");
+            System.out.println("Enter again: ");
+        }
+    }
+
     static void Menu() {
         System.out.println("=======================");
         System.out.println("1.Login system for Contestant ");
@@ -122,65 +145,105 @@ public class Main {
         System.out.println("=======================");
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public void showList(ArrayList<Contestant> ls) {
+        for (Contestant o : ls) {
+            System.out.println(o);
+        }
+    }
+
+    public void changeCon(ArrayList<Contestant> lss, String id) {
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < lss.size(); i++) {
+            if (lss.get(i).getId().equalsIgnoreCase(id)) {
+                String name1 = getName();
+                System.out.println("The old name: " + lss.get(i).getName());
+                String id1 = getId();
+                System.out.println("The old ID: " + lss.get(i).getId());
+                String email1 = getMail();
+                System.out.println("The old email: " + lss.get(i).getEmail());
+                String mobilephone1 = getMobi();
+                System.out.println("The old mobilephone: " + lss.get(i).getMobilephone());
+                System.out.print("INPUT RANK: ");
+                int rank1 = Integer.parseInt(sc.nextLine());
+                System.out.println("The old rank: " + lss.get(i).getRank());
+                String password1 = getPass();
+                System.out.println("The old password: " + lss.get(i).getPassword());
+                lss.get(i).setName(name1);
+                lss.get(i).setId(id1);
+                lss.get(i).setEmail(email1);
+                lss.get(i).setMobilephone(mobilephone1);
+                lss.get(i).setRank(rank1);
+                lss.get(i).setPassword(password1);
+                break;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Contestant> ls = new ArrayList<>();
+        ls.add(new Contestant("Nguyen Van A", "HA10000", "hello12@gmail.com", "0987654321", 1, "123456"));
+        ls.add(new Contestant("Nguyen Van B", "HE13623", "hello123@gmail.com", "0887654321", 2, "01234567"));
+        ls.add(new Contestant("Nguyen Van V", "HS15235", "hello15@gmail.com", "0997654321", 5, "8123456"));
+        ls.add(new Contestant("Nguyen Van D", "HF14643", "hello23@gmail.com", "0934654321", 3, "9123456"));
+        ls.add(new Contestant("Nguyen Van R", "HG15502", "hello152@gmail.com", "0687654321", 4, "32123456"));
+        ls.add(new Contestant("Nguyen Van K ", "He15502", "hello999@gmail.com", "0687654321", 4, "7723456"));
+        ls.add(new Contestant("Nguyen Van M", "HS14773", "hello777@gmail.com", "0637654321", 4, "41243456"));
+        ls.add(new Contestant("Nguyen Van E", "HQ15121", "hello555@gmail.com", "0827654321", 4, "5223456"));
+        ls.add(new Contestant("Nguyen Van W", "HA12101", "hello444@gmail.com", "0993765432", 4, "61223456"));
+        ls.add(new Contestant("Nguyen Van P", "HE11111", "hello323@gmail.com", "0667654321", 4, "9823456"));
+        try {
+            FileWriter fw = new FileWriter("Contestant.dat");
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (Contestant o : ls) {
+                bw.write(o.toString());
+                bw.newLine();
+            }
+            bw.close();
+            fw.close();
+        } catch (Exception e) {
+        }
+
+        Main main = new Main();
         Scanner sc = new Scanner(System.in);
         Menu();
         int choose;
-        List<Contestant> list = new ArrayList<>();
         while (true) {
             System.out.print("Please enter choose(1-10): ");
             choose = Integer.parseInt(sc.nextLine());
-            File file = new File("Contestant.dat");
-            File file1 = new File("QBs.dat");
-            switch (choose) {
-                case 1:
-                    String name = getName();
-                    String id = getId();
-                    String email = getMail();
-                    String mobilephone = getMobi();
-                    System.out.print("Input rank: ");
-                    int rank = Integer.parseInt(sc.nextLine());
-                    String password = getPass();
-                    Contestant s = new Contestant(name, id, email, mobilephone, rank, password);
-                    if (!file.exists()) {
-                        file.createNewFile();
-                    }
-                    FileOutputStream fos = new FileOutputStream(file);
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(s);
-                    oos.close();
-                    fos.close();
 
-                    FileInputStream fis = new FileInputStream(file);
-                    ObjectInputStream ois = new ObjectInputStream(fis);
-                    Contestant s1 = (Contestant) ois.readObject();
-                    System.out.println("Data has been saved in Contestant.dat");
-                    System.out.println(s1.toString());
+            switch (choose) {
+
+                case 1:
+                    String id = getId();
+                    String password = getPass();
+                    System.err.println("Login successfull.");
                     break;
                 case 2:
-                    FileInputStream fis1 = new FileInputStream(file);
-                    ObjectInputStream ois1 = new ObjectInputStream(fis1);
-                    Contestant s2 = (Contestant) ois1.readObject();
-                    System.out.println("Before changing profile information of Contestant");
-                    System.out.println(s2.toString());
-                    String name1 = getName();
-                    String id1 = getId();
-                    String email1 = getMail();
-                    String mobilephone1 = getMobi();
-                    System.out.print("INPUT RANK: ");
-                    int rank1 = Integer.parseInt(sc.nextLine());
-                    String password1 = getPass();
-                    s2.setName(name1);
-                    s2.setId(id1);
-                    s2.setEmail(email1);
-                    s2.setMobilephone(mobilephone1);
-                    s2.setRank(rank1);
-                    s2.setPassword(password1);
-                    System.out.println("After changing profile information of Contestant");
-                    System.out.println(s2.toString());
+                    Scanner sc1 = new Scanner(System.in);
+                    System.out.println("List of contestants.");
+                    main.showList(ls);
+                    System.out.println("Do you still want change profile information of Contestant?");
+                    if (checkInputYN()) {
+                        System.out.print("Enter the student ID to change: ");
+                        String id1 = sc1.nextLine();
+                        main.changeCon(ls, id1);
+                        try {
+                            FileWriter fw = new FileWriter("Contestant.dat");
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            for (Contestant o : ls) {
+                                bw.write(o.toString());
+                                bw.newLine();
+                            }
+                            bw.close();
+                            fw.close();
+                        } catch (Exception e) {
+                        }
+                        System.err.println("Successful change!!!");
+                    }
+
                     break;
                 case 3:
-                    System.out.print("Input ID problem: ");
+                    System.out.print("Input ID: ");
                     String idPro = check();
                     System.out.print("Input date: ");
                     String date = check();
@@ -196,20 +259,17 @@ public class Main {
                     System.out.print("Input author: ");
                     String author = check();
                     Problem p = new Problem(idPro, date, namePro, des, fulldes, mark, cat, author);
-                    if (!file1.exists()) {
-                        file1.createNewFile();
+                    try {
+                        FileWriter fw = new FileWriter("QBs.dat");
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        bw.write(p.toString());
+                        bw.close();
+                        fw.close();
+                    } catch (Exception e) {
                     }
-                    FileOutputStream fos1 = new FileOutputStream(file1);
-                    ObjectOutputStream oos1 = new ObjectOutputStream(fos1);
-                    oos1.writeObject(p);
-                    oos1.close();
-                    fos1.close();
 
-                    FileInputStream fis2 = new FileInputStream(file1);
-                    ObjectInputStream ois2 = new ObjectInputStream(fis2);
-                    Problem p1 = (Problem) ois2.readObject();
                     System.out.println("Data has been saved in Contestant.dat");
-                    System.out.println(p1.toString());
+
                     break;
                 case 4:
 
